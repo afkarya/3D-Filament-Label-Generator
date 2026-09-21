@@ -13,7 +13,7 @@ function App() {
           Create custom labels for your 3D printing filament spools
         </p>
         <a
-          href="https://github.com/FelixSelter/3D-Filament-Label-Generator"
+          href="https://github.com/afkarya/3D-Filament-Label-Generator"
           target="_blank"
           className="btn btn-sm btn-outline-secondary"
         >

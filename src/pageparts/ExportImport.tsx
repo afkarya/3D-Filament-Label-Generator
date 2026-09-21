@@ -58,6 +58,16 @@ const SafeSchemaV2 = z.object({
       logoSize: z.number(),
       brandFontSize: z.number(),
       filamentFontSize: z.number(),
+      paperWidth: z.number().optional(),
+      paperHeight: z.number().optional(),
+      marginLeft: z.number().optional(),
+      marginTop: z.number().optional(),
+      marginRight: z.number().optional(),
+      marginBottom: z.number().optional(),
+      gapX: z.number().optional(),
+      gapY: z.number().optional(),
+      columns: z.number().optional(),
+      rows: z.number().optional(),
     })
     .optional(),
   filamentTypes: z.array(z.string()).optional(),
@@ -68,9 +78,12 @@ function migrateV2ToCurrent(v2Data: V2Data): AppStateType {
   return {
     brands: [],
     labels: [],
-    labelConfig: defaultContext.labelConfig,
     filamentTypes: [],
     ...v2Data,
+    labelConfig: {
+      ...defaultContext.labelConfig,
+      ...(v2Data.labelConfig ?? {}),
+    },
   };
 }
 

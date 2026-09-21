@@ -24,6 +24,28 @@ This tool generates **uniform, print-accurate labels** that can be attached to f
   - Corner radius
   - Font sizes
   - Logo size
+- **Label-printer-ready PDF output:**
+  - Configurable paper/roll size, margins, gaps, and labels per row/page
+  - Presets for A4 sheets and 122mm wide continuous rolls (3 labels per row by default)
+  - Adjustable to any label printer by setting the label size and print layout
+
+---
+
+## Printing on a label printer
+
+The PDF export places labels on a page you define in **Global Label Settings → Print Layout**:
+
+- **Paper Width / Height (mm):** the size of one printed page. For a continuous roll, set the
+  width to your roll width and the height to the length of one printed strip
+  (e.g. `rows × (label height + vertical gap) + top/bottom margins`).
+- **Margins (mm):** distance from the page edge to the first label.
+- **Gap Horizontal / Vertical (mm):** space between labels. Set to `0` for die-cut labels.
+- **Columns / Rows:** number of labels per row / rows per page. Set to `0` to compute them
+  automatically from the paper size, label size, margins, and gaps.
+
+For a 122mm wide thermal ribbon printer with 34×15mm labels, use the
+**"122mm roll preset (3 per row)"** button, which sets up a 122mm wide strip with 3 labels per
+row. Print the resulting PDF at 100% scale (fit/actual size, no scaling).
 
 ---
 

@@ -17,6 +17,16 @@ export default function CreatedLabels() {
       logoSize: labelLogoSize,
       brandFontSize,
       filamentFontSize,
+      paperWidth,
+      paperHeight,
+      marginLeft,
+      marginTop,
+      marginRight,
+      marginBottom,
+      gapX,
+      gapY,
+      columns,
+      rows,
     },
   } = useContextSelector(AppContext, (state) => ({
     labels: state.appState.labels,
@@ -30,24 +40,29 @@ export default function CreatedLabels() {
       return;
     }
 
+    let cols = columns;
+    if (cols <= 0) {
+      cols = Math.max(
+        1,
+        Math.floor((paperWidth - marginLeft - marginRight + gapX) / (labelWidth + gapX)),
+      );
+    }
+
+    let rowsPerPage = rows;
+    if (rowsPerPage <= 0) {
+      rowsPerPage = Math.max(
+        1,
+        Math.floor((paperHeight - marginTop - marginBottom + gapY) / (labelHeight + gapY)),
+      );
+    }
+
     const doc = new jsPDF({
       unit: "mm",
-      format: "a4",
+      format: [paperWidth, paperHeight],
+      orientation: paperWidth >= paperHeight ? "landscape" : "portrait",
     });
 
     const borderWidth = 0.3;
-    const spacing = 3;
-    const pageWidth = 210;
-    const pageHeight = 297;
-    const margin = 10;
-
-    const cols = Math.floor(
-      (pageWidth - margin * 2 + spacing) / (labelWidth + spacing),
-    );
-
-    const rows = Math.floor(
-      (pageHeight - margin * 2 + spacing) / (labelHeight + spacing),
-    );
 
     const logoBoxSize = labelLogoSize;
 
@@ -60,10 +75,18 @@ export default function CreatedLabels() {
       if (pageCount > 0) doc.addPage();
       pageCount++;
 
-      for (let row = 0; row < rows && currentLabel < labels.length; row++) {
-        for (let col = 0; col < cols && currentLabel < labels.length; col++) {
-          const x = margin + col * (labelWidth + spacing);
-          const y = margin + row * (labelHeight + spacing);
+      for (
+        let row = 0;
+        row < rowsPerPage && currentLabel < labels.length;
+        row++
+      ) {
+        for (
+          let col = 0;
+          col < cols && currentLabel < labels.length;
+          col++
+        ) {
+          const x = marginLeft + col * (labelWidth + gapX);
+          const y = marginTop + row * (labelHeight + gapY);
 
           const label = labels[currentLabel];
           if (!label) {
@@ -167,12 +190,22 @@ export default function CreatedLabels() {
     doc.save("filament-labels.pdf");
   }, [
     brandFontSize,
+    columns,
     filamentFontSize,
+    gapX,
+    gapY,
     labelCornerRadius,
     labelHeight,
     labelLogoSize,
     labelWidth,
     labels,
+    marginBottom,
+    marginLeft,
+    marginRight,
+    marginTop,
+    paperHeight,
+    paperWidth,
+    rows,
   ]);
 
   return (
