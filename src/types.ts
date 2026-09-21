@@ -37,6 +37,7 @@ export const AppStateSchema = z.object({
     printBorder: z.boolean(),
     printBackground: z.boolean(),
     cutGuides: z.boolean(),
+    centerOnPage: z.boolean(),
   }),
   filamentTypes: z.array(z.string()),
 });

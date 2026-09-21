@@ -167,6 +167,24 @@ export default function GlobalLabelSettings() {
                 <input
                   className="form-check-input"
                   type="checkbox"
+                  checked={labelConfig.centerOnPage}
+                  onChange={(e) =>
+                    updateLabelConfig("centerOnPage", e.target.checked)
+                  }
+                  id="centerOnPage"
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor="centerOnPage"
+                  title="Centers the row of labels on the paper width, ignoring the left/right margins"
+                >
+                  Center horizontally on page
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
                   checked={labelConfig.printBorder}
                   onChange={(e) => updateLabelConfig("printBorder", e.target.checked)}
                   id="printBorder"

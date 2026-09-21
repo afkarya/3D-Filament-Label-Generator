@@ -30,6 +30,7 @@ export default function CreatedLabels() {
       printBorder,
       printBackground,
       cutGuides,
+      centerOnPage,
     },
   } = useContextSelector(AppContext, (state) => ({
     labels: state.appState.labels,
@@ -45,9 +46,12 @@ export default function CreatedLabels() {
 
     let cols = columns;
     if (cols <= 0) {
+      const availableWidth = centerOnPage
+        ? paperWidth
+        : paperWidth - marginLeft - marginRight;
       cols = Math.max(
         1,
-        Math.floor((paperWidth - marginLeft - marginRight + gapX) / (labelWidth + gapX)),
+        Math.floor((availableWidth + gapX) / (labelWidth + gapX)),
       );
     }
 
@@ -58,6 +62,11 @@ export default function CreatedLabels() {
         Math.floor((paperHeight - marginTop - marginBottom + gapY) / (labelHeight + gapY)),
       );
     }
+
+    const rowWidth = cols * labelWidth + (cols - 1) * gapX;
+    const startX = centerOnPage
+      ? Math.max(0, (paperWidth - rowWidth) / 2)
+      : marginLeft;
 
     const doc = new jsPDF({
       unit: "mm",
@@ -88,7 +97,7 @@ export default function CreatedLabels() {
           col < cols && currentLabel < labels.length;
           col++
         ) {
-          const x = marginLeft + col * (labelWidth + gapX);
+          const x = startX + col * (labelWidth + gapX);
           const y = marginTop + row * (labelHeight + gapY);
 
           const label = labels[currentLabel];
@@ -244,6 +253,7 @@ export default function CreatedLabels() {
     printBackground,
     printBorder,
     cutGuides,
+    centerOnPage,
     rows,
   ]);
 
