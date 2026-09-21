@@ -13,7 +13,7 @@ export default function GlobalLabelSettings() {
   );
 
   const updateLabelConfig = useCallback(
-    (key: keyof typeof labelConfig, value: number) => {
+    (key: keyof typeof labelConfig, value: number | boolean) => {
       setAppState((prev) => ({
         ...prev,
         labelConfig: {
@@ -159,6 +159,58 @@ export default function GlobalLabelSettings() {
                   updateLabelConfig("rows", value);
                 }}
               />
+            </div>
+          </div>
+          <div className="row mt-2">
+            <div className="col-12">
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={labelConfig.printBorder}
+                  onChange={(e) => updateLabelConfig("printBorder", e.target.checked)}
+                  id="printBorder"
+                />
+                <label className="form-check-label" htmlFor="printBorder">
+                  Print label border
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={labelConfig.printBackground}
+                  onChange={(e) =>
+                    updateLabelConfig("printBackground", e.target.checked)
+                  }
+                  id="printBackground"
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor="printBackground"
+                  title="Fills each label with white so label content never runs together"
+                >
+                  White label background
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={labelConfig.cutGuides}
+                  onChange={(e) =>
+                    updateLabelConfig("cutGuides", e.target.checked)
+                  }
+                  id="cutGuides"
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor="cutGuides"
+                  title="Prints dashed cut lines at the boundary of each label"
+                >
+                  Cut guides
+                </label>
+              </div>
             </div>
           </div>
         </div>

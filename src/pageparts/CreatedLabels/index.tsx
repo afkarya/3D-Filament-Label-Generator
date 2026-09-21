@@ -27,6 +27,9 @@ export default function CreatedLabels() {
       gapY,
       columns,
       rows,
+      printBorder,
+      printBackground,
+      cutGuides,
     },
   } = useContextSelector(AppContext, (state) => ({
     labels: state.appState.labels,
@@ -94,18 +97,51 @@ export default function CreatedLabels() {
             continue;
           }
 
-          // ---- Border ----
-          doc.setDrawColor(0);
-          doc.setLineWidth(borderWidth);
-          doc.roundedRect(
-            x - borderWidth / 2,
-            y - borderWidth / 2,
-            labelWidth + borderWidth,
-            labelHeight + borderWidth,
-            labelCornerRadius,
-            labelCornerRadius,
-            "S",
-          );
+          // ---- Background ----
+          if (printBackground) {
+            doc.setFillColor(255, 255, 255);
+            doc.roundedRect(
+              x,
+              y,
+              labelWidth,
+              labelHeight,
+              labelCornerRadius,
+              labelCornerRadius,
+              "F",
+            );
+          }
+
+          // ---- Cut guides (dashed lines at the exact label boundary) ----
+          if (cutGuides) {
+            doc.setDrawColor(150);
+            doc.setLineWidth(0.15);
+            doc.setLineDashPattern([0.8, 0.8], 0);
+            doc.roundedRect(
+              x,
+              y,
+              labelWidth,
+              labelHeight,
+              labelCornerRadius,
+              labelCornerRadius,
+              "S",
+            );
+            doc.setLineDashPattern([], 0);
+          }
+
+          // ---- Border (drawn inside the label so adjacent ones stay separate) ----
+          if (printBorder) {
+            doc.setDrawColor(0);
+            doc.setLineWidth(borderWidth);
+            doc.roundedRect(
+              x + borderWidth / 2,
+              y + borderWidth / 2,
+              labelWidth - borderWidth,
+              labelHeight - borderWidth,
+              labelCornerRadius,
+              labelCornerRadius,
+              "S",
+            );
+          }
 
           // ---- Text ----
           doc.setFontSize(brandFontSize);
@@ -205,6 +241,9 @@ export default function CreatedLabels() {
     marginTop,
     paperHeight,
     paperWidth,
+    printBackground,
+    printBorder,
+    cutGuides,
     rows,
   ]);
 

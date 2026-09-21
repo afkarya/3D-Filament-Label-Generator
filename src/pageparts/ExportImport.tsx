@@ -68,6 +68,9 @@ const SafeSchemaV2 = z.object({
       gapY: z.number().optional(),
       columns: z.number().optional(),
       rows: z.number().optional(),
+      printBorder: z.boolean().optional(),
+      printBackground: z.boolean().optional(),
+      cutGuides: z.boolean().optional(),
     })
     .optional(),
   filamentTypes: z.array(z.string()).optional(),

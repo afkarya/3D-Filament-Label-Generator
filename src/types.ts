@@ -34,6 +34,9 @@ export const AppStateSchema = z.object({
     gapY: z.number(),
     columns: z.number(),
     rows: z.number(),
+    printBorder: z.boolean(),
+    printBackground: z.boolean(),
+    cutGuides: z.boolean(),
   }),
   filamentTypes: z.array(z.string()),
 });

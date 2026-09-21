@@ -88,6 +88,9 @@ export const defaultContext: AppStateType = {
     gapY: 1,
     columns: 0,
     rows: 6,
+    printBorder: true,
+    printBackground: true,
+    cutGuides: false,
   },
   filamentTypes: [
     "PLA",
