@@ -203,6 +203,24 @@ export default function GlobalLabelSettings() {
                 <input
                   className="form-check-input"
                   type="checkbox"
+                  checked={labelConfig.blackLogos}
+                  onChange={(e) =>
+                    updateLabelConfig("blackLogos", e.target.checked)
+                  }
+                  id="blackLogos"
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor="blackLogos"
+                  title="Converts all brand logos to pure black at export time (good for single-color printers)"
+                >
+                  Logos in black
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
                   checked={labelConfig.printBorder}
                   onChange={(e) => updateLabelConfig("printBorder", e.target.checked)}
                   id="printBorder"

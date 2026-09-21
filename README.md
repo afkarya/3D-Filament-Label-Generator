@@ -27,6 +27,8 @@ This tool generates **uniform, print-accurate labels** that can be attached to f
 - **Label-printer-ready PDF output:**
   - Configurable paper/roll size, margins, gaps, and labels per row/page
   - Presets for A4 sheets and 122mm wide continuous rolls (3 labels per row by default)
+  - One strip (row of labels) per page for roll printing
+  - Convert all brand logos to pure black for single-color printers
   - Adjustable to any label printer by setting the label size and print layout
 
 ---

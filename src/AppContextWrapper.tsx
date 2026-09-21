@@ -93,6 +93,7 @@ export const defaultContext: AppStateType = {
     cutGuides: false,
     centerOnPage: true,
     oneRowPerPage: true,
+    blackLogos: true,
   },
   filamentTypes: [
     "PLA",

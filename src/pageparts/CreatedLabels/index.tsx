@@ -3,7 +3,7 @@ import { AppContext } from "../../AppContextWrapper";
 import Label from "./LabelListElem";
 import { jsPDF } from "jspdf";
 import { useCallback } from "react";
-import { showUserError } from "../../helper";
+import { logoToBlack, showUserError } from "../../helper";
 import { BAMBU_LABELS } from "./bambulabels";
 
 export default function CreatedLabels() {
@@ -32,6 +32,7 @@ export default function CreatedLabels() {
       cutGuides,
       centerOnPage,
       oneRowPerPage,
+      blackLogos,
     },
   } = useContextSelector(AppContext, (state) => ({
     labels: state.appState.labels,
@@ -39,7 +40,7 @@ export default function CreatedLabels() {
     labelConfig: state.appState.labelConfig,
   }));
 
-  const exportPDF = useCallback(() => {
+  const exportPDF = useCallback(async () => {
     if (labels.length === 0) {
       showUserError("Please create some labels first");
       return;
@@ -86,6 +87,23 @@ export default function CreatedLabels() {
     const logoBoxSize = labelLogoSize;
 
     const scale = Math.min(labelWidth, labelHeight) / 12;
+
+    // Pre-convert logos to black once per unique image.
+    const logoCache = new Map<string, Promise<string>>();
+    const getLogo = (src: string): Promise<string> => {
+      if (!blackLogos) return Promise.resolve(src);
+      const cached = logoCache.get(src);
+      if (cached) return cached;
+      const pending = logoToBlack(src).catch(() => src);
+      logoCache.set(src, pending);
+      return pending;
+    };
+    await Promise.all(
+      labels
+        .map((label) => label.brand.logo)
+        .filter((logo) => logo !== null && logo !== undefined)
+        .map((logo) => getLogo(logo as string)),
+    );
 
     let currentLabel = 0;
     let pageCount = 0;
@@ -231,7 +249,14 @@ export default function CreatedLabels() {
               );
             }
 
-            doc.addImage(label.brand.logo, "PNG", imgX, imgY, drawW, drawH);
+            doc.addImage(
+              await getLogo(label.brand.logo!),
+              "PNG",
+              imgX,
+              imgY,
+              drawW,
+              drawH,
+            );
           }
 
           currentLabel++;
@@ -262,6 +287,7 @@ export default function CreatedLabels() {
     cutGuides,
     centerOnPage,
     oneRowPerPage,
+    blackLogos,
     rows,
   ]);
 
