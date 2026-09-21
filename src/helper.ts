@@ -3,9 +3,10 @@ export function showUserError(message: string) {
 }
 
 /**
- * Converts a PNG/JPEG data URL into a pure black version, keeping the
- * original transparency: dark pixels become black, light pixels become
- * transparent. Returns the original URL if conversion is not possible.
+ * Converts a PNG/JPEG data URL into a pure black version: every
+ * non-transparent pixel becomes black (light colors included), while
+ * transparency is preserved so anti-aliased edges stay smooth. Returns
+ * the original URL if conversion is not possible.
  */
 export async function logoToBlack(dataUrl: string): Promise<string> {
   const img = new Image();
@@ -31,15 +32,10 @@ export async function logoToBlack(dataUrl: string): Promise<string> {
   const pixelData = ctx.getImageData(0, 0, width, height);
   const data = pixelData.data;
 
-  const threshold = 130;
   for (let i = 0; i < data.length; i += 4) {
-    const alpha = data[i + 3];
-    const luminance =
-      0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2];
     data[i] = 0;
     data[i + 1] = 0;
     data[i + 2] = 0;
-    data[i + 3] = luminance < threshold ? alpha : 0;
   }
 
   ctx.putImageData(pixelData, 0, 0);
