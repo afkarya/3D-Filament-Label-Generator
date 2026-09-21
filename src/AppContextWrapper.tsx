@@ -88,7 +88,7 @@ export const defaultContext: AppStateType = {
     gapY: 1,
     columns: 0,
     rows: 6,
-    printBorder: true,
+    printBorder: false,
     printBackground: true,
     cutGuides: false,
     centerOnPage: true,

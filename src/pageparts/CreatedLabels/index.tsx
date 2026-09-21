@@ -288,6 +288,26 @@ export default function CreatedLabels() {
           >
             Add Bambulab labels
           </button>
+          <div className="form-check form-check-inline me-2">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              checked={printBorder}
+              onChange={(e) =>
+                setAppState((prev) => ({
+                  ...prev,
+                  labelConfig: {
+                    ...prev.labelConfig,
+                    printBorder: e.target.checked,
+                  },
+                }))
+              }
+              id="quickPrintBorder"
+            />
+            <label className="form-check-label" htmlFor="quickPrintBorder">
+              Border
+            </label>
+          </div>
           <button className="btn btn-success" onClick={exportPDF}>
             Export to PDF
           </button>
