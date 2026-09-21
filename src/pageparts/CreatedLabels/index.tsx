@@ -33,6 +33,7 @@ export default function CreatedLabels() {
       centerOnPage,
       oneRowPerPage,
       blackLogos,
+      showLogos,
     },
   } = useContextSelector(AppContext, (state) => ({
     labels: state.appState.labels,
@@ -100,6 +101,7 @@ export default function CreatedLabels() {
     };
     await Promise.all(
       labels
+        .filter(() => showLogos)
         .map((label) => label.brand.logo)
         .filter((logo) => logo !== null && logo !== undefined)
         .map((logo) => getLogo(logo as string)),
@@ -199,7 +201,7 @@ export default function CreatedLabels() {
           doc.text(label.name, x + 1, y + labelHeight - bottomMargin);
 
           // ---- Logo area (RIGHT COLUMN like CSS grid) ----
-          if (label.brand.logo) {
+          if (showLogos && label.brand.logo) {
             const labelPadding = 0.5; // matches CSS: padding: 0.5mm on .labelContainer
 
             const logoContainerX = x + labelWidth - logoBoxSize - labelPadding;
@@ -288,6 +290,7 @@ export default function CreatedLabels() {
     centerOnPage,
     oneRowPerPage,
     blackLogos,
+    showLogos,
     rows,
   ]);
 

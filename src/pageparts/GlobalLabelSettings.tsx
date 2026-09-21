@@ -203,6 +203,24 @@ export default function GlobalLabelSettings() {
                 <input
                   className="form-check-input"
                   type="checkbox"
+                  checked={labelConfig.showLogos}
+                  onChange={(e) =>
+                    updateLabelConfig("showLogos", e.target.checked)
+                  }
+                  id="showLogos"
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor="showLogos"
+                  title="Prints the brand logo on each label. Uncheck to print labels without logos"
+                >
+                  Show logos
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
                   checked={labelConfig.blackLogos}
                   onChange={(e) =>
                     updateLabelConfig("blackLogos", e.target.checked)

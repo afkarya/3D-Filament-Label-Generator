@@ -74,6 +74,7 @@ const SafeSchemaV2 = z.object({
       centerOnPage: z.boolean().optional(),
       oneRowPerPage: z.boolean().optional(),
       blackLogos: z.boolean().optional(),
+      showLogos: z.boolean().optional(),
     })
     .optional(),
   filamentTypes: z.array(z.string()).optional(),

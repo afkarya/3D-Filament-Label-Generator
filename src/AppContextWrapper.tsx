@@ -94,6 +94,7 @@ export const defaultContext: AppStateType = {
     centerOnPage: true,
     oneRowPerPage: true,
     blackLogos: true,
+    showLogos: true,
   },
   filamentTypes: [
     "PLA",
