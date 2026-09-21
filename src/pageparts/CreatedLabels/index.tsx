@@ -31,6 +31,7 @@ export default function CreatedLabels() {
       printBackground,
       cutGuides,
       centerOnPage,
+      oneRowPerPage,
     },
   } = useContextSelector(AppContext, (state) => ({
     labels: state.appState.labels,
@@ -62,6 +63,12 @@ export default function CreatedLabels() {
         Math.floor((paperHeight - marginTop - marginBottom + gapY) / (labelHeight + gapY)),
       );
     }
+    if (oneRowPerPage) rowsPerPage = 1;
+
+    // With one row per page, size the page to exactly that row (a strip).
+    const pageHeight = oneRowPerPage
+      ? marginTop + labelHeight + marginBottom
+      : paperHeight;
 
     const rowWidth = cols * labelWidth + (cols - 1) * gapX;
     const startX = centerOnPage
@@ -70,8 +77,8 @@ export default function CreatedLabels() {
 
     const doc = new jsPDF({
       unit: "mm",
-      format: [paperWidth, paperHeight],
-      orientation: paperWidth >= paperHeight ? "landscape" : "portrait",
+      format: [paperWidth, pageHeight],
+      orientation: paperWidth >= pageHeight ? "landscape" : "portrait",
     });
 
     const borderWidth = 0.3;
@@ -254,6 +261,7 @@ export default function CreatedLabels() {
     printBorder,
     cutGuides,
     centerOnPage,
+    oneRowPerPage,
     rows,
   ]);
 

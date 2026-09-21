@@ -185,6 +185,24 @@ export default function GlobalLabelSettings() {
                 <input
                   className="form-check-input"
                   type="checkbox"
+                  checked={labelConfig.oneRowPerPage}
+                  onChange={(e) =>
+                    updateLabelConfig("oneRowPerPage", e.target.checked)
+                  }
+                  id="oneRowPerPage"
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor="oneRowPerPage"
+                  title="Prints one strip (row of labels) per page and sizes each page to a single row"
+                >
+                  One row per page
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
                   checked={labelConfig.printBorder}
                   onChange={(e) => updateLabelConfig("printBorder", e.target.checked)}
                   id="printBorder"
